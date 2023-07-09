@@ -1,25 +1,21 @@
 import express from 'express';
 import fs from "fs"
+import crypto from "crypto"
 const app = express()
-
-/*
-  do the decryption process in the cloud or do it locally,
-  if via the cloud, please provide your decryption keys
-*/
 const DECRYPTION_PROCESS = false;
 
 app.use(express.json());
 
-app.post('/submit-vote', (req, res) => {
-    if (DECRYPTION_PROCESS) {
-      
-    } else {
-      // fs.writeFileSync("logs.txt", )
-    }
-    res.send('SUCCESS')
-})
+// app.post('/submit-vote', (req, res) => {
+//   if (DECRYPTION_PROCESS) {
+//     console.log(req.body);
+//   } else {
+//     console.log(req.body);  
+//   }
+//   res.send('SUCCESS')
+// })
 
-app.get('/dat', (req, res) => {
+app.get('/update', (req, res) => {
   
 })
 
