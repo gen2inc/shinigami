@@ -15,8 +15,27 @@ app.use(express.json());
 //   res.send('SUCCESS')
 // })
 
-app.get('/update', (req, res) => {
-  
+app.post('/check', (req, res) => {
+  console.log(req.body.urls)
+  var transphobes=fs.readFileSync("transphobes.txt");
+  var transphobestest = transphobes.toString()
+  var transfriendly=fs.readFileSync("transfriendly.txt");
+  var transfriendlytest = transfriendly.toString()
+
+  let a = []
+  for (let i = 0; i < req.body.urls.length; i++) {
+    if (transphobestest.includes(req.body.urls[i])) {
+      a.push(req.body.urls[i])
+    }
+  }
+  let b = []
+  for (let i = 0; i < req.body.urls.length; i++) {
+    if (transfriendlytest.includes(req.body.urls[i])) {
+      b.push(req.body.urls[i])
+    }
+  }
+
+  res.send({transphobes:a,transfriendly:b})
 })
 
 app.listen(3000, () => {
