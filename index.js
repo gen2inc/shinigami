@@ -1,6 +1,5 @@
 import express from 'express';
 import fs from "fs"
-import crypto from "crypto"
 import { encryptText, decryptText } from './lib/encryption.js';
 const app = express()
 const DECRYPTION_PROCESS = false;
@@ -18,9 +17,10 @@ app.post('/submit-vote', (req, res) => {
 })
 
 app.post('/check', (req, res) => {
-  var transphobes=fs.readFileSync("transphobes.txt");
+  // improve the big o scale ellie, its O(N^2) currently.
+  var transphobes = fs.readFileSync("transphobes.txt");
   var transphobestest = transphobes.toString()
-  var transfriendly=fs.readFileSync("transfriendly.txt");
+  var transfriendly = fs.readFileSync("transfriendly.txt");
   var transfriendlytest = transfriendly.toString()
 
   let a = []
@@ -29,6 +29,7 @@ app.post('/check', (req, res) => {
       a.push(req.body.urls[i])
     }
   }
+
   let b = []
   for (let i = 0; i < req.body.urls.length; i++) {
     if (transfriendlytest.includes(req.body.urls[i])) {
