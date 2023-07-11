@@ -2,16 +2,16 @@ import express from 'express';
 import fs from "fs"
 import { encryptText, decryptText } from './lib/encryption.js';
 const app = express()
-const DECRYPTION_PROCESS = false;
+const SERVER_DECRYPTION = false;
 
 app.use(express.json());
 
 app.post('/submit-vote', (req, res) => {
-  if (DECRYPTION_PROCESS) {
-    let decrypt = decryptText(Buffer.from(req.body.DATA, 'base64'));
+  if (SERVER_DECRYPTION) {
+    let decrypt = decryptText(Buffer.from(req.body.enc, 'base64'));
     console.log(`${decrypt.toString()}`)
   } else {
-    console.log(req.body.DATA);  
+    console.log(req.body.enc);  
   }
   res.send('SUCCESS')
 })
@@ -29,6 +29,7 @@ app.post('/check', (req, res) => {
       a.push(req.body.urls[i])
     }
   }
+
 
   let b = []
   for (let i = 0; i < req.body.urls.length; i++) {
