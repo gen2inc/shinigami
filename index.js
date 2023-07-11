@@ -1,22 +1,23 @@
 import express from 'express';
 import fs from "fs"
 import crypto from "crypto"
+import { encryptText, decryptText } from './lib/encryption.js';
 const app = express()
 const DECRYPTION_PROCESS = false;
 
 app.use(express.json());
 
-// app.post('/submit-vote', (req, res) => {
-//   if (DECRYPTION_PROCESS) {
-//     console.log(req.body);
-//   } else {
-//     console.log(req.body);  
-//   }
-//   res.send('SUCCESS')
-// })
+app.post('/submit-vote', (req, res) => {
+  if (DECRYPTION_PROCESS) {
+    let decrypt = decryptText(Buffer.from(req.body.DATA, 'base64'));
+    console.log(`${decrypt.toString()}`)
+  } else {
+    console.log(req.body.DATA);  
+  }
+  res.send('SUCCESS')
+})
 
 app.post('/check', (req, res) => {
-  console.log(req.body.urls)
   var transphobes=fs.readFileSync("transphobes.txt");
   var transphobestest = transphobes.toString()
   var transfriendly=fs.readFileSync("transfriendly.txt");
