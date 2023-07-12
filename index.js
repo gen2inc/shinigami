@@ -17,6 +17,7 @@ app.post('/submit-vote', (req, res) => {
 })
 
 app.post('/check', (req, res) => {
+  // O(m) big o scale
   var transphobes = fs.readFileSync("./data/transphobes.txt", 'utf-8')
   var transfriendly = fs.readFileSync("./data/transfriendly.txt", 'utf-8')
   let hashMap = new Map();
@@ -27,19 +28,19 @@ app.post('/check', (req, res) => {
       hashMap.set(line, "transfriendly");
   });
   
-  let transphobic = [];
-  let transfriendly = [];
+  let arr = [];
+  let arr1 = [];
   for (let i = 0; i < req.body.urls.length; i++) {
     if (hashMap.has(req.body.urls[i])) {
       if (hashMap.get(req.body.urls[i]) === "transphobic") {
-          transphobic.push(req.body.urls[i])
+          arr.push(req.body.urls[i])
       } else {
-          transfriendly.push(req.body.urls[i]);
+          arr1.push(req.body.urls[i]);
       }
     }
   }
 
-  res.send({transphobes:a,transfriendly:b})
+  res.send({transphobes:arr,transfriendly:arr1})
 })
 
 app.listen(3000, () => {
