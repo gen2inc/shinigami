@@ -17,24 +17,25 @@ app.post('/submit-vote', (req, res) => {
 })
 
 app.post('/check', (req, res) => {
-  // improve the big o scale ellie, its O(N^2) currently.
-  var transphobes = fs.readFileSync("./data/transphobes.txt");
-  var transphobestest = transphobes.toString()
-  var transfriendly = fs.readFileSync("./data/transfriendly.txt");
-  var transfriendlytest = transfriendly.toString()
-
-  let a = []
+  var transphobes = fs.readFileSync("./data/transphobes.txt", 'utf-8')
+  var transfriendly = fs.readFileSync("./data/transfriendly.txt", 'utf-8')
+  let hashMap = new Map();
+  transphobes.split(/\r?\n/).forEach(line =>  {
+      hashMap.set(line, "transphobic");
+  });
+  transfriendly.split(/\r?\n/).forEach(line =>  {
+      hashMap.set(line, "transfriendly");
+  });
+  
+  let transphobic = [];
+  let transfriendly = [];
   for (let i = 0; i < req.body.urls.length; i++) {
-    if (transphobestest.includes(req.body.urls[i])) {
-      a.push(req.body.urls[i])
-    }
-  }
-
-
-  let b = []
-  for (let i = 0; i < req.body.urls.length; i++) {
-    if (transfriendlytest.includes(req.body.urls[i])) {
-      b.push(req.body.urls[i])
+    if (hashMap.has(req.body.urls[i])) {
+      if (hashMap.get(req.body.urls[i]) === "transphobic") {
+          transphobic.push(req.body.urls[i])
+      } else {
+          transfriendly.push(req.body.urls[i]);
+      }
     }
   }
 
