@@ -9,9 +9,9 @@ app.use(express.json());
 app.post('/submit-vote', (req, res) => {
   if (SERVER_DECRYPTION) {
     let decrypt = decryptText(Buffer.from(req.body.enc, 'base64'));
-    fs.appendFileSync("./logs.txt", decrypt.toString());
+    fs.appendFileSync("./logs.txt", `${decrypt.toString()}\n`);
   } else {
-    fs.appendFileSync("./logs.txt", req.body);  
+    fs.appendFileSync("./logs.txt", `${req.body}\n`);  
   }
   res.send('SUCCESS')
 })
