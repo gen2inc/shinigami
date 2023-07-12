@@ -20,27 +20,20 @@ app.post('/check', (req, res) => {
   // O(m) big o scale
   var transphobes = fs.readFileSync("./data/transphobes.txt", 'utf-8')
   var transfriendly = fs.readFileSync("./data/transfriendly.txt", 'utf-8')
-  let hashMap = new Map();
-  transphobes.split(/\r?\n/).forEach(line =>  {
-      hashMap.set(line, "transphobic");
-  });
-  transfriendly.split(/\r?\n/).forEach(line =>  {
-      hashMap.set(line, "transfriendly");
-  });
+  let phobicSet = new Set(transphobes.split(/\r?\n/));
+  let friendlySet = new Set(transfriendly.split(/\r?\n/));
   
-  let arr = [];
-  let arr1 = [];
+  let friendly = [];
+  let phobic = [];
   for (let i = 0; i < req.body.urls.length; i++) {
-    if (hashMap.has(req.body.urls[i])) {
-      if (hashMap.get(req.body.urls[i]) === "transphobic") {
-          arr.push(req.body.urls[i])
-      } else {
-          arr1.push(req.body.urls[i]);
-      }
+    if (friendlySet.has(req.body.urls[i])) {
+      friendly.push(req.body.urls[i])
+    } else if (phobicSet.has(req.body.urls[i])) {
+      phobic.push(req.body.urls[i])
     }
   }
 
-  res.send({transphobes:arr,transfriendly:arr1})
+  res.send({transphobes:phobic,transfriendly:friendly})
 })
 
 app.listen(3000, () => {
