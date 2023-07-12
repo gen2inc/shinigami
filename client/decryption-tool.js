@@ -3,6 +3,7 @@
 import fs from "fs"
 import crypto from "crypto";
 
+
 function decryptText (encryptedText) {
     return crypto.privateDecrypt(
       {
