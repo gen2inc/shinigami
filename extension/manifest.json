@@ -3,7 +3,7 @@
     "version": "1.0.0",
     "description": "really cool",
     "manifest_version": 3,
-    "author": "gen2inc",
+    "author": "gen 2 inc.",
     "action":{
         "default_popup": "index.html",
         "default_title": "shinigami"
