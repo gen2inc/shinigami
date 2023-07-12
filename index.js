@@ -1,6 +1,6 @@
 import express from 'express';
 import fs from "fs"
-import { encryptText, decryptText } from './lib/encryption.js';
+import { decryptText } from './lib/encryption.js';
 const app = express()
 const SERVER_DECRYPTION = false;
 
@@ -9,18 +9,18 @@ app.use(express.json());
 app.post('/submit-vote', (req, res) => {
   if (SERVER_DECRYPTION) {
     let decrypt = decryptText(Buffer.from(req.body.enc, 'base64'));
-    fs.appendFileSync("./logs.txt", `${decrypt.toString()}\n`);
+    fs.appendFileSync("./data/logs.txt", `${decrypt.toString()}\n`);
   } else {
-    fs.appendFileSync("./logs.txt", `${req.body}\n`);  
+    fs.appendFileSync("./data/logs.txt", `${req.body}\n`);  
   }
   res.send('SUCCESS')
 })
 
 app.post('/check', (req, res) => {
   // improve the big o scale ellie, its O(N^2) currently.
-  var transphobes = fs.readFileSync("transphobes.txt");
+  var transphobes = fs.readFileSync("./data/transphobes.txt");
   var transphobestest = transphobes.toString()
-  var transfriendly = fs.readFileSync("transfriendly.txt");
+  var transfriendly = fs.readFileSync("./data/transfriendly.txt");
   var transfriendlytest = transfriendly.toString()
 
   let a = []
