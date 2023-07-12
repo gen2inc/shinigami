@@ -3,7 +3,11 @@
 import fs from "fs"
 import crypto from "crypto";
 
-
+/**
+ * Decrypt text with the private key
+ * @param {string} The encrypted text with the public key
+ * @returns {string} Plain text
+ */
 function decryptText (encryptedText) {
     return crypto.privateDecrypt(
       {

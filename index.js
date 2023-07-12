@@ -17,7 +17,7 @@ app.post('/submit-vote', (req, res) => {
 })
 
 app.post('/check', (req, res) => {
-  // O(m) big o scale
+  // i fucking need O(1) or ima go mentally insane 
   var transphobes = fs.readFileSync("./data/transphobes.txt", 'utf-8')
   var transfriendly = fs.readFileSync("./data/transfriendly.txt", 'utf-8')
   let phobicSet = new Set(transphobes.split(/\r?\n/));
