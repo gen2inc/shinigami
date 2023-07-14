@@ -11,15 +11,17 @@ app.post('/submit-vote', (req, res) => {
     let decrypt = decryptText(Buffer.from(req.body.enc, 'base64'));
     fs.appendFileSync("./data/logs.txt", `${decrypt.toString()}\n`);
   } else {
-    fs.appendFileSync("./data/logs.txt", `${req.body}\n`);  
+    if (req.body.res) {
+      fs.appendFileSync("./data/logs.txt", `${req.body}\n`);
+    }  
   }
   res.send('SUCCESS')
 })
 
 app.post('/check', (req, res) => {
   // i fucking need O(1) or ima go mentally insane 
-  var transphobes = fs.readFileSync("./data/transphobes.txt", 'utf-8')
-  var transfriendly = fs.readFileSync("./data/transfriendly.txt", 'utf-8')
+  let transphobes = fs.readFileSync("./data/transphobes.txt", 'utf-8')
+  let transfriendly = fs.readFileSync("./data/transfriendly.txt", 'utf-8')
   let phobicSet = new Set(transphobes.split(/\r?\n/));
   let friendlySet = new Set(transfriendly.split(/\r?\n/));
   
@@ -36,6 +38,7 @@ app.post('/check', (req, res) => {
   res.send({transphobes:phobic,transfriendly:friendly})
 })
 
+
 app.listen(3000, () => {
-  console.log(`Shinigami loaded and listening on port 3000`)
+  console.log("Shinigami loaded and listening on port 3000");
 })
