@@ -2,7 +2,9 @@ async function getLinks() {
     const links = document.getElementsByTagName("a");
     let array = [];
     for (let i = 0; i < links.length; i++) {
-        array.push(links[i].href);
+        if (links[i].href) {
+            array.push(links[i].href);
+        }
     }
 
     return array;
